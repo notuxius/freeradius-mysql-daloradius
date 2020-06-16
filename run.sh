@@ -10,4 +10,3 @@ mysqld_safe >/dev/null &
 php-fpm7.0 & 
 nginx & 
 /usr/sbin/freeradius -X
-

@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-MAINTAINER Andrey Mamaev <asda@asda.ru>
+MAINTAINER Alexander Mentyu <notuxius@gmail.com>
 
 ENV MYSQLTMPROOT toor
 
@@ -20,11 +20,11 @@ ENV CLIENT_SECRET testing123
 
 
 RUN wget https://github.com/lirantal/daloradius/archive/master.zip && \
-	unzip *.zip && \
-	mv daloradius-master /var/www/daloradius && \
- 	chown -R www-data:www-data /var/www/daloradius && \
-	chmod 644 /var/www/daloradius/library/daloradius.conf.php && \
-	rm /etc/nginx/sites-enabled/default
+  unzip *.zip && \
+  mv daloradius-master /var/www/daloradius && \
+  chown -R www-data:www-data /var/www/daloradius && \
+  chmod 644 /var/www/daloradius/library/daloradius.conf.php && \
+  rm /etc/nginx/sites-enabled/default
 
 #	cp -R /var/www/daloradius/contrib/chilli/portal2/hotspotlogin /var/www/daloradius
 
@@ -32,9 +32,9 @@ COPY init.sh /
 COPY run.sh /	
 RUN chmod +x /init.sh && chmod +x /run.sh
 COPY etc/nginx/radius.conf /etc/nginx/sites-enabled/
-		
 
-	
+
+
 EXPOSE 1812 1813 80
 
 ENTRYPOINT ["/run.sh"]

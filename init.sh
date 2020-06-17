@@ -30,10 +30,14 @@ sed -i -e 's|\t#  See "Authentication Logging Queries" in sql.conf\n\t#sql|#See 
 sed -i -e 's|sqltrace = no|sqltrace = yes|g' /etc/freeradius/sql.conf
 
 
+echo -e '\ntest 	Cleartext-Password := "test"
+\tService-Type = Framed-User,
+\tFramed-IP-Address = 172.16.3.33,
+\tReply-Message = "Hello %{User-Name} Source IP: %{Packet-Src-IP-Address} %{Framed-IP-Address}"' >> /etc/freeradius/users
+
 
 sed -i -e "s/readclients = yes/nreadclients = yes/" /etc/freeradius/sql.conf
 echo -e "\nATTRIBUTE Usage-Limit 3000 string\nATTRIBUTE Rate-Limit 3001 string" >> /etc/freeradius/dictionary
-
 
 
 #================DALORADIUS=========================

@@ -1,20 +1,20 @@
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 
 MAINTAINER Alexander Mentyu <notuxius@gmail.com>
 
 ENV MYSQLTMPROOT toor
 
-# RUN ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime
+RUN ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime
 
 RUN echo mysql-server mysql-server/root_password password $MYSQLTMPROOT | debconf-set-selections;\
   echo mysql-server mysql-server/root_password_again password $MYSQLTMPROOT | debconf-set-selections;\
-  apt-get update && apt-get install -y mysql-server mysql-client libmysqlclient-dev \
+  apt update && apt install -y mysql-server mysql-client libmysqlclient-dev \
   nginx php php-common php-gd php-curl php-mail php-mail-mime php-pear php-db php-mysqlnd \
-  freeradius freeradius-mysql freeradius-utils\
+  freeradius-mysql freeradius-utils\
   wget unzip vim && \
   pear install DB && \
   apt-get clean && \
-  # dpkg-reconfigure --frontend noninteractive tzdata && \
+  dpkg-reconfigure --frontend noninteractive tzdata && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.cpan	
 
 ENV RADIUS_DB_PWD radpass
@@ -44,4 +44,3 @@ COPY accounting_packets/ /home
 EXPOSE 1812 1813 80
 
 ENTRYPOINT ["/run.sh"]
-

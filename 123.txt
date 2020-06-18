@@ -1,0 +1,55 @@
+apt update
+apt install freeradius freeradius-mysql mysql-server mysql-client
+
+
+apt install net-tools
+netstat -tulp | grep "18120"
+killall freeradius
+
+
+mysql_secure_installation
+sudo mysql -u root -p
+/etc/mysql/my.cnf
+/etc/init.d/mysql restart
+
+
+/etc/freeradius/3.0/mods-available/
+/etc/freeradius/3.0/mods-enabled
+/etc/freeradius/3.0/users
+/etc/freeradius/3.0/clients.conf
+/etc/freeradius/3.0/sites-enabled/default
+/etc/init.d/freeradius restart
+
+
+
+
+
+radtest test test localhost 0 testing123
+
+echo "User-Name = test,User-password=test" | radclient localhost:1812 auth testing123
+
+radclient -x -f /home/start_packet.rad localhost acct 'testing123'
+radclient -x -f /home/update_packet.rad localhost acct 'testing123'
+radclient -x -f /home/stop_packet.rad localhost acct 'testing123'
+
+
+
+
+docker build -t 'myfreeradius' .
+
+docker run --name freeradius -d -p 1812:1812/udp -p 1813:1813/udp -p 80:80 myfreeradius && docker attach freeradius
+
+
+docker start freeradius
+
+docker exec -it freeradius bash
+
+
+
+
+docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
+
+
+
+use LABEL instead of maintainer 
+copy sh to opt

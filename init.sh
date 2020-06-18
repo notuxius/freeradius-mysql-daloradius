@@ -3,11 +3,11 @@ service mysql start
 
 mysql -u root --password=$MYSQLTMPROOT -e \
 "CREATE DATABASE radius; GRANT ALL ON radius.* TO radius@localhost IDENTIFIED BY '$RADIUS_DB_PWD'; \
-flush privileges;"
+FLUSH PRIVILEGES;"
 
-mysql -uradius --password=$RADIUS_DB_PWD radius  < /etc/freeradius/sql/mysql/schema.sql
-mysql -uradius --password=$RADIUS_DB_PWD radius  < /etc/freeradius/sql/mysql/nas.sql
-mysql -uradius --password=$RADIUS_DB_PWD radius  < /var/www/daloradius/contrib/db/mysql-daloradius.sql
+mysql -uradius --password=$RADIUS_DB_PWD radius < /etc/freeradius/sql/mysql/schema.sql
+mysql -uradius --password=$RADIUS_DB_PWD radius < /etc/freeradius/sql/mysql/nas.sql
+mysql -uradius --password=$RADIUS_DB_PWD radius < /var/www/daloradius/contrib/db/mysql-daloradius.sql
 
 
 sed -i 's/password = "radpass"/password = "'$RADIUS_DB_PWD'"/' /etc/freeradius/sql.conf
